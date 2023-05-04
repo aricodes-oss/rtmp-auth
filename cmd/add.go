@@ -22,16 +22,14 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"github.com/aricodes-oss/std"
-
 	"rauth/model"
 	"rauth/query"
 
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/bcrypt"
-)
 
-var log = std.Logger
+	"strings"
+)
 
 // addCmd represents the add command
 var addCmd = &cobra.Command{
@@ -40,7 +38,7 @@ var addCmd = &cobra.Command{
 	Args:  cobra.MatchAll(cobra.ExactArgs(2), cobra.OnlyValidArgs),
 	Run: func(cmd *cobra.Command, args []string) {
 		u := query.User
-		name, password := args[0], args[1]
+		name, password := strings.ToLower(args[0]), args[1]
 
 		hash, err := bcrypt.GenerateFromPassword([]byte(password), 0)
 		if err != nil {

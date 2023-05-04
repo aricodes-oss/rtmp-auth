@@ -22,23 +22,30 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
+	"rauth/model"
+	"rauth/query"
 
 	"github.com/spf13/cobra"
+
+	"strings"
 )
 
 // removeCmd represents the remove command
 var removeCmd = &cobra.Command{
-	Use:   "remove",
+	Use:   "remove [username]",
 	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Args:  cobra.MatchAll(cobra.ExactArgs(1), cobra.OnlyValidArgs),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("remove called")
+		u := query.User
+		name := args[0]
+
+		info, err := u.Where(u.Name.Eq(strings.ToLower(name))).Delete()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		log.Debug(info)
+		log.Infof("")
 	},
 }
 

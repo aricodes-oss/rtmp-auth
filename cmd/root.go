@@ -22,12 +22,13 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"github.com/aricodes-oss/std"
 	"os"
 
 	"github.com/spf13/cobra"
 )
 
-
+var log = std.Logger
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -64,5 +65,3 @@ func init() {
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-
-
