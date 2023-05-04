@@ -1,9 +1,11 @@
 package db
 
 import (
+	"os"
+
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"os"
+	"gorm.io/gorm/logger"
 )
 
 var Connection *gorm.DB
@@ -15,5 +17,7 @@ func init() {
 		Path = "data.db"
 	}
 
-	Connection, _ = gorm.Open(sqlite.Open(Path))
+	Connection, _ = gorm.Open(sqlite.Open(Path), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Silent),
+	})
 }

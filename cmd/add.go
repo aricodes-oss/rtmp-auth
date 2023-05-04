@@ -22,19 +22,37 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
+	"github.com/aricodes-oss/std"
+
+	"rauth/model"
+	"rauth/query"
 
 	"github.com/spf13/cobra"
-	"rauth/query"
+	"golang.org/x/crypto/bcrypt"
 )
+
+var log = std.Logger
 
 // addCmd represents the add command
 var addCmd = &cobra.Command{
-	Use:   "add",
+	Use:   "add [username] [password]",
 	Short: "Adds a user to the database",
 	Args:  cobra.MatchAll(cobra.ExactArgs(2), cobra.OnlyValidArgs),
 	Run: func(cmd *cobra.Command, args []string) {
+		u := query.User
 		name, password := args[0], args[1]
+
+		hash, err := bcrypt.GenerateFromPassword([]byte(password), 0)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		err = u.Create(&model.User{Name: name, Hash: string(hash)})
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		log.Infof("Added user %s\n", name)
 	},
 }
 

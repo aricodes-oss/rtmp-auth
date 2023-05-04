@@ -24,11 +24,13 @@ package main
 import (
 	"rauth/cmd"
 	"rauth/db"
+	"rauth/model"
 	"rauth/query"
 )
 
 func init() {
 	query.SetDefault(db.Connection)
+	db.Connection.AutoMigrate(model.User{})
 }
 
 func main() {
