@@ -25,7 +25,12 @@
 go.work
 
 # End of https://www.toptal.com/developers/gitignore/api/go
+
+# Common names for executable files
 rauth
+main
+
+# Runtime database
 *.db
 
 # Jetbrains configuration files
