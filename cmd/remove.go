@@ -22,7 +22,6 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"rauth/model"
 	"rauth/query"
 
 	"github.com/spf13/cobra"
